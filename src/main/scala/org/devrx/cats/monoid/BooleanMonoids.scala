@@ -1,13 +1,25 @@
 package org.devrx.cats.monoid
 
-trait OrMonoid extends Monoid[Boolean] {
+object OrMonoid extends Monoid[Boolean] {
   override def empty: Boolean = false
 
   override def combine(x: Boolean, y: Boolean): Boolean = x || y
 }
 
-trait AndMonoid extends Monoid[Boolean] {
+object AndMonoid extends Monoid[Boolean] {
   override def empty: Boolean = true
 
   override def combine(x: Boolean, y: Boolean): Boolean = x && y
+}
+
+object XorMonoid extends Monoid[Boolean] {
+  override def empty: Boolean = false
+
+  override def combine(x: Boolean, y: Boolean): Boolean = x != y
+}
+
+object EqMonoid extends Monoid[Boolean] {
+  override def empty: Boolean = true
+
+  override def combine(x: Boolean, y: Boolean): Boolean = x == y
 }

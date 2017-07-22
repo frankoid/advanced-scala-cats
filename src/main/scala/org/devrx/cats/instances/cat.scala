@@ -1,6 +1,6 @@
 package org.devrx.cats.instances
 
-import cats.Show
+import cats.{Eq, Show}
 import org.devrx.cats.{Cat, Printable}
 
 object cat {
@@ -17,4 +17,6 @@ object cat {
 
     s"${cat.name.show} is a ${cat.age.show} year-old ${cat.color.show} cat."
   }
+
+  implicit val eqForCat = Eq.instance[Cat] { (a, b) => a == b }
 }

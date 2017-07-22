@@ -15,7 +15,9 @@ object Cat {
 
 object CatDemo {
   def main(args: Array[String]): Unit = {
+    import PrintableSyntax._
+
     val henry = Cat("Henry", 3, "Ginger")
-    Printable.print(henry)
+    henry.print
   }
 }

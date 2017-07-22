@@ -9,13 +9,6 @@ class SetMonoidsSemigroupsSpec extends WordSpec with Matchers {
     }
   }
 
-  // Not really a semigroup - TODO test case that demonstrates this
-  "DifferenceSemigroup" should {
-    "be a semigroup" in {
-      shouldBeASemigroup(new DifferenceSemigroup[Int])
-    }
-  }
-
   "IntersectSemigroup" should {
     "be a semigroup" in {
       shouldBeASemigroup(new IntersectSemigroup[Int])
@@ -33,6 +26,7 @@ class SetMonoidsSemigroupsSpec extends WordSpec with Matchers {
     associativeLaw(Set.empty[Int], Set(1, 2), Set(3)) shouldBe true
     associativeLaw(Set(1, 2), Set(3, 4), Set(5, 6)) shouldBe true
     associativeLaw(Set(1, 2, 3), Set(3, 4, 5), Set(5, 6, 7)) shouldBe true
+    associativeLaw(Set(1, 2, 3), Set.empty[Int], Set(3, 4, 5)) shouldBe true
   }
 
   private def associativeLaw[A](x: A, y: A, z: A)

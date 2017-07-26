@@ -26,5 +26,13 @@ class SuperAdderSpec extends WordSpec with Matchers {
     "return None when all Option[Int]s are None" in {
       SuperAdder.add(List(None, None): List[Option[Int]]) shouldBe None
     }
+
+    "sum Orders" in {
+      SuperAdder.add(List(Order(1.5, 23.0), Order(52.0, 1.0), Order(145.123, 12314.123))) shouldBe Order(1.5 + 52.0 + 145.123, 23.0 + 1.0 + 12314.123)
+    }
+
+    "return zero for empty list of Orders" in {
+      SuperAdder.add(List.empty[Order]) shouldBe Order(0.0, 0.0)
+    }
   }
 }

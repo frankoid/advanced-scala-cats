@@ -36,7 +36,7 @@ object CodecInstances {
   }
 
   implicit def BoxCodec[A](implicit codec: Codec[A]): Codec[Box[A]] = codec.imap(
-    dec = (a: A) => Box[A](a),
-    enc = (box: Box[A]) => box.value
+    dec = Box(_),
+    enc = _.value
   )
 }

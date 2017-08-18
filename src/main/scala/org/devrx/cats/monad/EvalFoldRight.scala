@@ -14,6 +14,6 @@ object EvalFoldRight {
       }
 
     evalFoldRight(as, Eval.now(acc))((a, evalB) =>
-      evalB.flatMap((b: B) => Eval.defer(Eval.now(fn(a, b))))).value
+      evalB.flatMap((b: B) => Eval.now(fn(a, b)))).value
   }
 }

@@ -13,7 +13,9 @@ object EvalFoldRight {
           acc
       }
 
-    evalFoldRight(as, Eval.now(acc))((a, evalB) =>
-      evalB.map((b: B) => fn(a, b))).value
+    def evalFn(a: A, evalB: Eval[B]): Eval[B] =
+      evalB.map(b => fn(a, b))
+
+    evalFoldRight(as, Eval.now(acc))(evalFn).value
   }
 }

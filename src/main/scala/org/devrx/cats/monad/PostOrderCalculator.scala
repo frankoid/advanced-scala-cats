@@ -7,36 +7,25 @@ object PostOrderCalculator {
   type CalcState[A] = State[List[Int], A]
 
   def evalOne(sym: String): CalcState[Int] = sym match {
-    case "+" =>
-      State[List[Int], Int] {
-        case y :: x :: tail =>
-          (x + y :: tail, x + y)
-        case _ => sys.error("Stack underflow")
-      }
-    case "-" =>
-      State[List[Int], Int] {
-        case y :: x :: tail =>
-          (x - y :: tail, x - y)
-        case _ => sys.error("Stack underflow")
-      }
-    case "*" =>
-      State[List[Int], Int] {
-        case y :: x :: tail =>
-          (x * y :: tail, x * y)
-        case _ => sys.error("Stack underflow")
-      }
-    case "/" =>
-      State[List[Int], Int] {
-        case y :: x :: tail =>
-          (x / y :: tail, x / y)
-        case _ => sys.error("Stack underflow")
-      }
-    case s =>
-      State[List[Int], Int] { oldStack =>
-        val n = s.toInt
-        (n :: oldStack, n)
-      }
+    case "+" => operator(_ + _)
+    case "-" => operator(_ - _)
+    case "*" => operator(_ * _)
+    case "/" => operator(_ / _)
+    case s => operand(s.toInt)
   }
+
+  def operand(num: Int): CalcState[Int] =
+    State[List[Int], Int] { oldStack =>
+      (num :: oldStack, num)
+    }
+
+  def operator(func: (Int, Int) => Int): CalcState[Int] =
+    State[List[Int], Int] {
+      case y :: x :: tail =>
+        val ans = func(x, y)
+        (ans :: tail, ans)
+      case _ => sys.error("Stack underflow")
+    }
 }
 
 // The solution given in the book calculates

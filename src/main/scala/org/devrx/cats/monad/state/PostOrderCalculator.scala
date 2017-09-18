@@ -12,6 +12,10 @@ object PostOrderCalculator {
     case head :: tail => evalOne(head).flatMap(_ => evalAll(tail))
   }
 
+  // fold version
+//  def evalAll(input: List[String]): CalcState[Int] =
+//    input.foldRight(0.pure[CalcState])((s, state) => state.flatMap(_ => evalOne(s)))
+
   def evalOne(sym: String): CalcState[Int] = sym match {
     case "+" => operator(_ + _)
     case "-" => operator(_ - _)

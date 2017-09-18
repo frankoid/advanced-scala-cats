@@ -1,10 +1,16 @@
 package org.devrx.cats.monad.state
 
 import cats.data.State
+import cats.syntax.applicative._
 
 object PostOrderCalculator {
 
   type CalcState[A] = State[List[Int], A]
+
+  def evalAll(input: List[String]): CalcState[Int] = input match {
+    case Nil => 0.pure[CalcState]
+    case head :: tail => evalOne(head).flatMap(_ => evalAll(tail))
+  }
 
   def evalOne(sym: String): CalcState[Int] = sym match {
     case "+" => operator(_ + _)

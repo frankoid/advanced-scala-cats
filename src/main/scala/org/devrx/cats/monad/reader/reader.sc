@@ -8,7 +8,7 @@ val catName: Reader[Cat, String] =
 catName.run(Cat("Garfield", "lasagne"))
 
 val greetKitty: Reader[Cat, String] =
-  catName.map(name => s"Hello ${name}")
+  catName.map(name => s"Hello $name")
 
 greetKitty.run(Cat("Heathcliff", "junk food"))
 
@@ -19,7 +19,7 @@ val greetAndFeed: Reader[Cat, String] =
   for {
     msg1 <- greetKitty
     msg2 <- feedKitty
-  } yield s"${msg1} ${msg2}"
+  } yield s"$msg1 $msg2"
 
 greetAndFeed(Cat("Garfield", "lasagne"))
 

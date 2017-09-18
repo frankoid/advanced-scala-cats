@@ -1,4 +1,4 @@
-package org.devrx.cats.monad
+package org.devrx.cats.monad.state
 
 import cats.data.State
 

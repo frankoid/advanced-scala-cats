@@ -1,5 +1,5 @@
-import org.devrx.cats.monad.Db
-import org.devrx.cats.monad.Db._
+import org.devrx.cats.monad.reader.Db
+import org.devrx.cats.monad.reader.Db._
 
 val db = Db(
   Map(

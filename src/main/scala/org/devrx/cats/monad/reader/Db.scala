@@ -1,4 +1,4 @@
-package org.devrx.cats.monad
+package org.devrx.cats.monad.reader
 
 import cats.Monad
 import cats.data.Reader

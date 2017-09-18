@@ -1,4 +1,4 @@
-import org.devrx.cats.monad.PostOrderCalculator._
+import org.devrx.cats.monad.state.PostOrderCalculator._
 
 val program = for {
   _   <- evalOne("4")

@@ -7,8 +7,15 @@ object PostOrderCalculator {
 
   type CalcState[A] = State[List[Int], A]
 
+  // evalAll(List("4", "3", "-"))
+  // evalOne("4").flatMap(_ => evalAll(List("3", "-"))
+  // evalOne("4").flatMap(_ => evalOne("3").flatMap(_ => evalAll(List("-"))))
+  // evalOne("4").flatMap(_ => evalOne("3").flatMap(_ => evalOne("-").flatMap(_ => evalAll(Nil))))
+  // evalOne("4").flatMap(_ => evalOne("3").flatMap(_ => evalOne("-").flatMap(_ => 0.pure[CalcState])))
+
   def evalAll(input: List[String]): CalcState[Int] = input match {
     case Nil => 0.pure[CalcState]
+//    case head :: Nil => evalOne(head)
     case head :: tail => evalOne(head).flatMap(_ => evalAll(tail))
   }
 

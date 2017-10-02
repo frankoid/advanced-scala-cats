@@ -12,9 +12,11 @@ class PostOrderCalculatorSpec extends WordSpec with Matchers {
       allProgram.runA(Nil).value shouldBe 9
     }
 
-    "???" in {
-      val input: List[String] = List.empty
-      println(evalAll(input).run(Nil).value)
+    "throw an exception for empty list because the value of evaluating an empty post-order expression is undefined" in {
+      intercept[Exception] {
+        val input: List[String] = List.empty
+        evalAll(input).run(Nil).value
+      }
     }
   }
 }

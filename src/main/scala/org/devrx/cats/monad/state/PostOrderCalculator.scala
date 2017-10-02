@@ -1,27 +1,36 @@
 package org.devrx.cats.monad.state
 
 import cats.data.State
-import cats.syntax.applicative._
 
 object PostOrderCalculator {
 
   type CalcState[A] = State[List[Int], A]
 
-  // evalAll(List("4", "3", "-"))
-  // evalOne("4").flatMap(_ => evalAll(List("3", "-"))
-  // evalOne("4").flatMap(_ => evalOne("3").flatMap(_ => evalAll(List("-"))))
-  // evalOne("4").flatMap(_ => evalOne("3").flatMap(_ => evalOne("-").flatMap(_ => evalAll(Nil))))
-  // evalOne("4").flatMap(_ => evalOne("3").flatMap(_ => evalOne("-").flatMap(_ => 0.pure[CalcState])))
-
+  // Versions that throw an exception given an empty input list -------------
   def evalAll(input: List[String]): CalcState[Int] = input match {
-    case Nil => 0.pure[CalcState]
-//    case head :: Nil => evalOne(head)
+    case head :: Nil => evalOne(head)
     case head :: tail => evalOne(head).flatMap(_ => evalAll(tail))
   }
 
+  // Versions that default to 0 given an empty input list -------------------
+//  def evalAll(input: List[String]): CalcState[Int] = {
+//    def evalAllMain(input: List[String]): CalcState[Int] = input match {
+//      case head :: Nil => evalOne(head)
+//      case head :: tail => evalOne(head).flatMap(_ => evalAllMain(tail))
+//    }
+//
+//    evalAllMain("0" :: input)
+//  }
+
   // fold version
 //  def evalAll(input: List[String]): CalcState[Int] =
-//    input.foldRight(0.pure[CalcState])((s, state) => state.flatMap(_ => evalOne(s)))
+//    input.foldLeft(0.pure[CalcState])((state: CalcState[Int], s: String) => state.flatMap(_ => evalOne(s)))
+
+  // sample answer
+//  def evalAll(input: List[String]): CalcState[Int] =
+//  input.foldLeft(0.pure[CalcState]) { (a, b) =>
+//    a flatMap (_ => evalOne(b))
+//  }
 
   def evalOne(sym: String): CalcState[Int] = sym match {
     case "+" => operator(_ + _)
